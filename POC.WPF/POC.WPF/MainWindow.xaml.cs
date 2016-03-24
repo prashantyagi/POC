@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POC.WPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace POC.WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            UserViewModel viewModel = new UserViewModel();
+            this.DataContext = viewModel;
+
         }
+
+
     }
 }
