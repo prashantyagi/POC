@@ -4,21 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication"
+        xmlns:userControls="clr-namespace:WpfControlLibrary;assembly=WpfControlLibrary"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         WindowState="Maximized"
         Title="Invoicing App" Height="350" Width="525">
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
-            <MenuItem Header="Products" Click="MenuItem_Product_Click"/>
+            <MenuItem Header="Invoice" Click="MenuItem_Invoice_Click"/>
+            <MenuItem Header="Maintain">
+                <MenuItem Header="Products" Click="MenuItem_Product_Click"/>
+                <MenuItem Header="Clients" Click="MenuItem_Client_Click"/>
+            </MenuItem>
         </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <Frame x:Name="frame" Content="Frame" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Grid.Column="0"/>
+            <userControls:IndexControl x:Name="indexControl" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
+            <userControls:InvoiceControl x:Name="invoiceControl" Visibility="Hidden" Grid.Row="0" Grid.Column="0"/>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -28,8 +33,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Company Name"/>
-                <Label Grid.Row="0" Grid.Column="1" Content="V1.0"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="V1.0"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="Kavach Engineering" HorizontalAlignment="Center"/>
                 <Label Grid.Row="0" Grid.Column="2" Content="April 2016 - March 2017"/>
             </Grid>
         </Grid>

@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApplication
+namespace WpfApplication.Core
 {
-
-
     public interface IRepository<T>
     {
         void Add(T item);

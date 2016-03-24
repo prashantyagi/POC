@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -13,15 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApplication.Core;
 
-namespace WpfApplication
+namespace WpfControlLibrary
 {
     /// <summary>
-    /// Interaction logic for ProductsWindow.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class ProductsWindow : Window
+    public partial class IndexControl : UserControl
     {
         private IRepository<Product> _productRepository;
         private bool _isInsert;
@@ -29,11 +28,11 @@ namespace WpfApplication
 
         private List<Product> _products;
 
-        public ProductsWindow()
+        public IndexControl()
         {
-            InitializeComponent();
-
             InitializeProductRepository();
+
+            InitializeComponent();
         }
 
         private void InitializeProductRepository()
@@ -47,26 +46,26 @@ namespace WpfApplication
             _productRepository.Add(new Product { Id = 5, Name = "Fifth", Unit = "KG", Rate = 9.94, VatPercent = 12.5 });
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            dataGrid.ItemsSource = ResetProducts();
-        }
-
-        //private ObservableCollection<Product> GetProducts()
-        //{
-        //    return new ObservableCollection<Product>(_productRepository.FindAll().ToList());
-        //}
-
         private IEnumerable<Product> ResetProducts()
         {
             _products = _productRepository.FindAll().ToList();
             return _products;
         }
 
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            _isInsert = true;
+        }
+
+        private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            _isEdit = true;
+        }
+
         private void dataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             Product product = e.Row.DataContext as Product;
-            
+
             if (product != null)
             {
                 if (_isInsert)
@@ -90,14 +89,9 @@ namespace WpfApplication
             }
         }
 
-        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _isInsert = true;
-        }
-
-        private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
-        {
-            _isEdit = true;
+            dataGrid.ItemsSource = ResetProducts();
         }
 
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
@@ -111,7 +105,7 @@ namespace WpfApplication
             }
             else
             {
-                collectionView.Filter = o => 
+                collectionView.Filter = o =>
                 {
                     Product a = o as Product;
                     if (textBox.Name == "txtName")
